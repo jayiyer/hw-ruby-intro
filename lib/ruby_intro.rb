@@ -28,10 +28,10 @@ end
 
 def sum_to_n? arr, n
   if arr.empty?
-    if n != 0
-      return false
+    if n == 0
+      return true
     end
-    return true
+    return false
   end
   if arr.length == 1
     return false
@@ -49,21 +49,17 @@ def starts_with_consonant? s
   if s.empty?
     return false
   end
-  #puts "s[0] is not empty"
   if ["A", "E", "I", "O", "U"].include?(s[0])
     return false
   end
-  #puts "s[0] is not an uppercase vowel"
   if ["a", "e", "i", "o", "u"].include?(s[0])
     return false
   end
-  #puts "s[0] is not a lowercase vowel"
   lowercase_all_letters = ('a'..'z').to_a
   uppercase_all_letters = ('A'..'Z').to_a 
-  if !(lowercase_all_letters.include?(s[0])) || !(uppercase_all_letters.include?(s[0]))
+  if !(lowercase_all_letters.include?(s[0])) && !(uppercase_all_letters.include?(s[0]))
     return false
   end
-  #puts "s[0] is a consonant"
   return true
 end
 
@@ -81,8 +77,6 @@ end
 # Part 3
 
 class BookInStock
-  @isbn, @price
-  
   def initialize(isbn, price)
     raise ArgumentError, "ISBN cannot be empty" if isbn.empty?
     raise ArgumentError, "Price must be positive" if price <= 0
@@ -90,7 +84,18 @@ class BookInStock
     @price = price
   end
   
+  attr_accessor :isbn
+  attr_accessor :price
+  
+  def isbn()
+    @isbn
+  end
+  
+  def price()
+    @price
+  end
+  
   def price_as_string
-    price_str = @price.to_s
-    price_str = price_str.number_to_currency
+    format("$%.2f", @price)
+  end
 end
